@@ -1,29 +1,56 @@
-# Authentication Server
+# Auth Server
 
 ## Purpose
-This server provides centralized authentication for multiple applications.  
-It will be used in the ShelfWatch application to manage user access securely.
+This server provides **centralized authentication and authorization** for multiple applications.  
+It acts as a unified entry point for user identity, login, and access control.  
+Example use case: ShelfWatch application and other apps sharing the same user accounts.
 
 ## Features (Planned)
-- User registration and login
-- Multi-application authentication support
-- Secure password storage
-- Token-based authentication (JWT)
-- Role-based access control
-- Integration with Google OAuth
+- User registration and login (**Authentication**)
+- Multi-application authentication support (**SSO – Single Sign-On**)
+- Secure password storage (BCrypt)
+- Token-based authentication (**JWT, OAuth2/OIDC flows**)
+- Role-based access control (**Authorization**)
+- Integration with external identity providers (e.g. Google OAuth)
+- Centralized user and role management
 - Built with Spring Boot
 
 ## Getting Started
-> This is an initial version. Setup instructions will be added as development progresses.
+> This is an initial version. Setup instructions will be expanded as development progresses.
 
 ### Prerequisites
 - Java 21
 - Spring Boot
-- Database (PostgreSQL)
+- Database: PostgreSQL
+- `.env` file with configuration, for example:
+
+```env
+# Database configuration
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=authdb
+
+# Application DB user
+APP_USER=auth_service
+APP_PASSWORD=auth_service
+
+# Security (to be added later)
+# JWT_SECRET=your_jwt_secret
+```
+
+### Running Locally
+1. Start a PostgreSQL database (e.g. using Docker):
+   ```bash
+   docker compose up -d
+   ```
+2. Export environment variables from `.env` (or configure in your IDE).
+3. Run the application:
+   ```bash
+   ./graldew bootRun
+   ```
 
 ## Usage
-> Usage instructions will be added as functionality is implemented.
-
+> Usage instructions and API endpoints will be added as functionality is implemented.
 
 ## License
 MIT License
