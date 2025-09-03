@@ -1,0 +1,17 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(user, "User", "Uses the applications via a web browser or mobile app")
+
+System(auth, "Auth Service", "Central authentication service for login, registration, and identity management")
+
+System_Ext(authProvider, "Identity Provider", "External authentication provider (OIDC/OAuth2, e.g., Google, Keycloak, Auth0)")
+
+System_Ext(shelfwatch, "Shelfwatch", "Main application that consumes authentication service")
+
+Rel(user, shelfwatch, "Uses via browser/mobile app", "HTTPS")
+Rel(shelfwatch, auth, "Delegates authentication/authorization to", "REST/HTTPS + JWT/OAuth2")
+Rel(user, auth, "Direct login/registration", "HTTPS")
+Rel(auth, authProvider, "Federated login", "OIDC/OAuth2")
+
+@enduml

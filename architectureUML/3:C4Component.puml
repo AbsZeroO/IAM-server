@@ -1,0 +1,32 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container(authApi, "Auth API", "Spring Boot Application", "Provides authentication services") {
+    Component(userController, "UserController", "REST Controller", "Handles registration and user profile endpoints")
+    Component(authController, "AuthController", "REST Controller", "Handles login, logout, token refresh")
+    Component(userService, "UserService", "Service", "Business logic for user management")
+    Component(authService, "AuthService", "Service", "Handles authentication, tokens, password validation")
+    Component(oauthService, "OAuthService", "Service", "Handles external IdP (Google, Keycloak) login")
+    Component(userRepository, "UserRepository", "Spring Data JPA", "CRUD operations on user data")
+    Component(tokenProvider, "TokenProvider", "Utility", "Generates and validates JWT tokens")
+    Component(passwordEncoder, "PasswordEncoder", "Utility", "Hashes and verifies passwords")
+    Component(sessionCache, "SessionCache", "Redis Client", "Stores sessions and refresh tokens temporarily")
+}
+
+ContainerDb(authDb, "Auth Database", "PostgreSQL", "Stores users, hashed passwords, tokens, sessions")
+ContainerDb(authRedis, "Redis Cache", "Redis", "Stores sessions, refresh tokens, and temporary auth data")
+
+System_Ext(authProvider, "Identity Provider", "OIDC/OAuth2 Provider", "External login system")
+
+Rel(userController, userService, "Delegates")
+Rel(authController, authService, "Delegates")
+Rel(authController, oauthService, "Uses for federated login")
+Rel(userService, userRepository, "Reads/writes")
+Rel(authService, tokenProvider, "Uses to create/validate JWT")
+Rel(authService, passwordEncoder, "Validates password hashes")
+Rel(authService, sessionCache, "Reads/writes sessions & refresh tokens")
+Rel(oauthService, authProvider, "Uses for external login", "OIDC/OAuth2")
+Rel(userRepository, authDb, "Stores/fetches user data", "JDBC")
+Rel(sessionCache, authRedis, "Stores/fetches session & refresh tokens", "Redis protocol")
+
+@enduml

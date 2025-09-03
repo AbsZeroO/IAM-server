@@ -1,0 +1,24 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "User", "Uses Shelfwatch or manages account directly")
+
+System_Ext(shelfwatch, "Shelfwatch", "Client app for movies, series, books")
+System_Boundary(auth, "Auth Service") {
+    Container(authUi, "Auth UI", "Web frontend", "Login, registration, account management")
+    Container(authApi, "Auth API", "Spring Boot App", "Handles authentication, tokens, account logic")
+    ContainerDb(authDb, "Auth Database", "PostgreSQL", "Stores users, credentials")
+    ContainerDb(authRedis, "Redis", "Redis", "Sessions, refresh tokens")
+}
+
+System_Ext(authProvider, "Identity Provider", "OIDC/OAuth2 Provider")
+
+Rel(user, shelfwatch, "Uses via browser", "HTTPS")
+Rel(shelfwatch, authUi, "Redirects user for login/registration", "HTTPS")
+Rel(user, authUi, "Directly accesses to manage account", "HTTPS")
+Rel(authUi, authApi, "Sends login/registration/account requests", "REST/HTTPS")
+Rel(authApi, authDb, "Reads/writes user data", "JDBC")
+Rel(authApi, authRedis, "Stores sessions & refresh tokens", "Redis protocol")
+Rel(authApi, authProvider, "Delegates federated login", "OIDC/OAuth2")
+
+@enduml
