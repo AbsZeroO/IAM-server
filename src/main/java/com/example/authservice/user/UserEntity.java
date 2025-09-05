@@ -36,19 +36,28 @@ import java.util.stream.Collectors;
 @Builder
 public class UserEntity implements UserDetails {
 
-    /** Primary key: unique user identifier (UUID). */
+    /**
+     * Primary key: unique user identifier (UUID).
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    /** User's email, used as login username. Must be unique. */
+    /**
+     * User's email. Must be unique.
+     */
     @Column(nullable = false)
     private String email;
 
+    /**
+     * User's name used for login.
+     */
     @Column(nullable = false, unique = true)
     private String username;
 
-    /** User's hashed password. */
+    /**
+     * User's hashed password.
+     */
     @Column
     private String password;
 
@@ -67,25 +76,37 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private OutsideAuthProvider outsideAuthProvider;
 
-    /** User's first name (optional). */
+    /**
+     * User's first name (optional).
+     */
     private String firstName;
 
-    /** User's last name (optional). */
+    /**
+     * User's last name (optional).
+     */
     private String lastName;
 
-    /** Indicates whether the user is enabled (can authenticate). */
+    /**
+     * Indicates whether the user is enabled (can authenticate).
+     */
     @Column(nullable = false)
     private boolean enabled;
 
-    /** Indicates whether the user's account has expired. */
+    /**
+     * Indicates whether the user's account has expired.
+     */
     @Column(nullable = false)
     private boolean accountNonExpired;
 
-    /** Indicates whether the user's account is locked. */
+    /**
+     * Indicates whether the user's account is locked.
+     */
     @Column(nullable = false)
     private boolean accountNonLocked;
 
-    /** Indicates whether the user's credentials (password) have expired. */
+    /**
+     * Indicates whether the user's credentials (password) have expired.
+     */
     @Column(nullable = false)
     private boolean credentialsNonExpired;
 

@@ -1,10 +1,10 @@
 package com.example.authservice;
 
+import com.example.authservice.authorities.PermissionEntity;
+import com.example.authservice.authorities.RoleEntity;
 import com.example.authservice.authorities.repository.PermissionRepository;
 import com.example.authservice.authorities.repository.RoleRepository;
 import com.example.authservice.user.OutsideAuthProvider;
-import com.example.authservice.authorities.PermissionEntity;
-import com.example.authservice.authorities.RoleEntity;
 import com.example.authservice.user.UserEntity;
 import com.example.authservice.user.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -58,7 +58,6 @@ public class UserAddTesting {
             }
         };
     }
-
 
 
 }

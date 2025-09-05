@@ -1,7 +1,10 @@
 package com.example.authservice.authorities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Represents a low-level permission that can be assigned to roles.
@@ -19,16 +22,22 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PermissionEntity {
-    /** Primary key: unique permission identifier. */
+    /**
+     * Primary key: unique permission identifier.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /** Unique name of the permission (e.g. "READ_USER"). */
+    /**
+     * Unique name of the permission (e.g. "READ_USER").
+     */
     @Column(nullable = false, unique = true)
     private String permissionName;
 
-    /** Optimistic lock version field. */
+    /**
+     * Optimistic lock version field.
+     */
     @Version
     private Integer version;
 }

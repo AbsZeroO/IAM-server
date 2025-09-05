@@ -1,7 +1,10 @@
 package com.example.authservice.authorities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Set;
 
@@ -21,16 +24,22 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleEntity {
-    /** Primary key: unique role identifier. */
+    /**
+     * Primary key: unique role identifier.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /** Unique name of the role (e.g. "ADMIN"). */
+    /**
+     * Unique name of the role (e.g. "ADMIN").
+     */
     @Column(nullable = false, unique = true)
     private String roleName;
 
-    /** Permissions assigned to this role. */
+    /**
+     * Permissions assigned to this role.
+     */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_permission",
@@ -39,7 +48,9 @@ public class RoleEntity {
     )
     private Set<PermissionEntity> permissions;
 
-    /** Optimistic lock version field. */
+    /**
+     * Optimistic lock version field.
+     */
     @Version
     private Integer version;
 }
