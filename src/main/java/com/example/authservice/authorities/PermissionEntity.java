@@ -1,10 +1,7 @@
-package com.example.authservice.user;
+package com.example.authservice.authorities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Represents a low-level permission that can be assigned to roles.

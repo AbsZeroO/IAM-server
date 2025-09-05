@@ -1,5 +1,6 @@
 package com.example.authservice.user;
 
+import com.example.authservice.authorities.RoleEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,15 +21,19 @@ import java.util.stream.Collectors;
 @Entity
 @Table(
         name = "users",
-        uniqueConstraints = @UniqueConstraint(columnNames = "email"),
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "email"),
+                @UniqueConstraint(columnNames = {"oauth_id", "outside_auth_provider"})
+        },
         indexes = {
-                @Index(name = "idxUserEmail", columnList = "email")
+                @Index(name = "idxEmail", columnList = "email")
         }
 )
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserEntity implements UserDetails {
 
     /** Primary key: unique user identifier (UUID). */
@@ -37,12 +42,30 @@ public class UserEntity implements UserDetails {
     private UUID id;
 
     /** User's email, used as login username. Must be unique. */
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false, unique = true)
+    private String username;
+
     /** User's hashed password. */
-    @Column(nullable = false)
+    @Column
     private String password;
+
+    /**
+     * Unique identifier provided by the OAuth provider for this user.
+     * For example, Google or Facebook user ID.
+     */
+    @Column
+    private String oauthId;
+
+    /**
+     * Specifies the external authentication provider used for login.
+     * See {@link OutsideAuthProvider} for possible values.
+     */
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OutsideAuthProvider outsideAuthProvider;
 
     /** User's first name (optional). */
     private String firstName;
@@ -76,6 +99,7 @@ public class UserEntity implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @Singular
     private Set<RoleEntity> roles;
 
     /**
@@ -103,13 +127,12 @@ public class UserEntity implements UserDetails {
 
     /**
      * Returns the username used to authenticate the user.
-     * In this application, it's the user's email.
      *
-     * @return the username (email)
+     * @return the username
      */
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     /**
@@ -151,4 +174,5 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
 }
