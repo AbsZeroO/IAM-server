@@ -1,4 +1,4 @@
-# Auth Server
+# IAM-server
 
 ## Purpose
 This server provides **centralized authentication and authorization** for multiple applications.  
