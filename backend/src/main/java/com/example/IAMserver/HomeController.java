@@ -1,4 +1,4 @@
-package com.example.authservice;
+package com.example.IAMserver;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

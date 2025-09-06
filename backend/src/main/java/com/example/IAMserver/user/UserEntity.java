@@ -1,6 +1,6 @@
-package com.example.authservice.user;
+package com.example.IAMserver.user;
 
-import com.example.authservice.authorities.RoleEntity;
+import com.example.IAMserver.authorities.RoleEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

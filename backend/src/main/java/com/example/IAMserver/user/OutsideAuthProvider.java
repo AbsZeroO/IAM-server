@@ -1,4 +1,4 @@
-package com.example.authservice.user;
+package com.example.IAMserver.user;
 
 public enum OutsideAuthProvider {
     LOCAL,

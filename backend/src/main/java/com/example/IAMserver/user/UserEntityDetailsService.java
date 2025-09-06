@@ -1,18 +1,21 @@
-package com.example.authservice.user.service;
+package com.example.IAMserver.user;
 
-import com.example.authservice.user.UserEntity;
-import com.example.authservice.user.repository.UserRepository;
-import lombok.AllArgsConstructor;
+import com.example.IAMserver.dto.UserRegistrationRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Slf4j
 public class UserEntityDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Locates the user based on the username. In the actual implementation, the search
@@ -32,5 +35,22 @@ public class UserEntityDetailsService implements UserDetailsService {
         return userRepository.findByUsername(username)
                 .filter(user -> !user.getAuthorities().isEmpty())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+    }
+
+    @Transactional
+    public void registerUser(UserRegistrationRequest userRegistrationRequest) throws UserAlreadyExistsException {
+        if (userRepository.findByEmail(userRegistrationRequest.email()).isPresent()) {
+            log.warn("User with email {} already exists", userRegistrationRequest.email());
+            throw new UserAlreadyExistsException("Email already exists");
+        }
+
+        userRepository.save(
+                UserEntity.builder()
+                        .email(userRegistrationRequest.email())
+                        .password(passwordEncoder.encode(userRegistrationRequest.password()))
+                        .username(userRegistrationRequest.username())
+                        // TODO: Add default roles for registered users
+                        .build()
+        );
     }
 }

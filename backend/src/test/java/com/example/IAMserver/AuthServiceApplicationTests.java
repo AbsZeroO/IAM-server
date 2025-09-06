@@ -1,4 +1,4 @@
-package com.example.authservice;
+package com.example.IAMserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

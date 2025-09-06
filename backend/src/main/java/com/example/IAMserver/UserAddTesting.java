@@ -1,12 +1,12 @@
-package com.example.authservice;
+package com.example.IAMserver;
 
-import com.example.authservice.authorities.PermissionEntity;
-import com.example.authservice.authorities.RoleEntity;
-import com.example.authservice.authorities.repository.PermissionRepository;
-import com.example.authservice.authorities.repository.RoleRepository;
-import com.example.authservice.user.OutsideAuthProvider;
-import com.example.authservice.user.UserEntity;
-import com.example.authservice.user.repository.UserRepository;
+import com.example.IAMserver.authorities.PermissionEntity;
+import com.example.IAMserver.authorities.RoleEntity;
+import com.example.IAMserver.authorities.repository.PermissionRepository;
+import com.example.IAMserver.authorities.repository.RoleRepository;
+import com.example.IAMserver.user.OutsideAuthProvider;
+import com.example.IAMserver.user.UserEntity;
+import com.example.IAMserver.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
