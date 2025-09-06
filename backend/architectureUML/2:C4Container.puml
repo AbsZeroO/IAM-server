@@ -4,7 +4,7 @@
 Person(user, "User", "Uses Shelfwatch or manages account directly")
 
 System_Ext(shelfwatch, "Shelfwatch", "Client app for movies, series, books")
-System_Boundary(auth, "Auth Service") {
+System_Boundary(auth, "IAM-server") {
     Container(authUi, "Auth UI", "Web frontend", "Login, registration, account management")
     Container(authApi, "Auth API", "Spring Boot App", "Handles authentication, tokens, account logic")
     ContainerDb(authDb, "Auth Database", "PostgreSQL", "Stores users, credentials")

@@ -3,7 +3,7 @@
 
 Person(user, "User", "Uses the applications via a web browser or mobile app")
 
-System(auth, "Auth Service", "Central authentication service for login, registration, and identity management")
+System(auth, "IAM-server", "Central authentication service for login, registration, and identity management")
 
 System_Ext(authProvider, "Identity Provider", "External authentication provider (OIDC/OAuth2, e.g., Google, Keycloak, Auth0)")
 
