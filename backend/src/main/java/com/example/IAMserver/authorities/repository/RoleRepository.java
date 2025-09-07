@@ -2,6 +2,7 @@ package com.example.IAMserver.authorities.repository;
 
 import com.example.IAMserver.authorities.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -10,5 +11,8 @@ import java.util.Optional;
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 
     Optional<RoleEntity> findByRoleName(String roleName);
+
+    @Query("SELECT r FROM RoleEntity r WHERE r.roleName = 'ROLE_USER'")
+    Optional<RoleEntity> getDefaultRole();
 
 }

@@ -19,9 +19,11 @@ public class AuthController {
     private final UserEntityDetailsService userEntityDetailsService;
 
     @PostMapping("/register")
-    public ResponseEntity<HttpStatusCode> registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest) {
+    public ResponseEntity<Void> registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest) {
 
-        return ResponseEntity.ok().body(HttpStatus.NOT_IMPLEMENTED);
+
+
+        return ResponseEntity.ok().build();
     }
 
 }

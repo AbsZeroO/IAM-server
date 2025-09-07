@@ -1,5 +1,6 @@
 package com.example.IAMserver.user;
 
+import com.example.IAMserver.authorities.RoleService;
 import com.example.IAMserver.dto.UserRegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ public class UserEntityDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
 
     /**
      * Locates the user based on the username. In the actual implementation, the search
@@ -49,7 +51,7 @@ public class UserEntityDetailsService implements UserDetailsService {
                         .email(userRegistrationRequest.email())
                         .password(passwordEncoder.encode(userRegistrationRequest.password()))
                         .username(userRegistrationRequest.username())
-                        // TODO: Add default roles for registered users
+                        .role(roleService.getDefaultRole())
                         .build()
         );
     }

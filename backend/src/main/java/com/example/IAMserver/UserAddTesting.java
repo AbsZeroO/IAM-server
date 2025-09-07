@@ -41,6 +41,15 @@ public class UserAddTesting {
                         return roleRepository.save(role);
                     });
 
+            RoleEntity userRole = roleRepository
+                    .findByRoleName("ROLE_USER")
+                    .orElseGet(() -> {
+                        RoleEntity role = new RoleEntity();
+                        role.setRoleName("ROLE_USER");
+                        role.setPermissions(Set.of(readPermission));
+                        return roleRepository.save(role);
+                    });
+
             if (userRepository.findByUsername("user").isEmpty()) {
                 UserEntity user = UserEntity.builder()
                         .email("user@example.com")
