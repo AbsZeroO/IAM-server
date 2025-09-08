@@ -3,8 +3,6 @@ package com.example.IAMserver.auth;
 import com.example.IAMserver.dto.UserRegistrationRequest;
 import com.example.IAMserver.user.UserEntityDetailsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +19,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest) {
 
-        userEntityDetailsService.registerUser(userRegistrationRequest);
+        userEntityDetailsService.registerLocalUser(userRegistrationRequest);
 
         return ResponseEntity.ok().build();
     }

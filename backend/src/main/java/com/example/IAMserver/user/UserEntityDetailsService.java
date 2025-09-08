@@ -36,14 +36,14 @@ public class UserEntityDetailsService implements UserDetailsService {
      */
     @Transactional(readOnly = true)
     @Override
-    public UserEntity loadUserByUsername(String username) throws UserNotFound {
+    public UserEntity loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
                 .filter(user -> !user.getAuthorities().isEmpty())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
 
     @Transactional
-    public void registerUser(UserRegistrationRequest userRegistrationRequest) throws UserAlreadyExistsException {
+    public void registerLocalUser(UserRegistrationRequest userRegistrationRequest) throws UserAlreadyExistsException {
         try {
             userRepository.save(
                     UserEntity.builder()
@@ -82,5 +82,18 @@ public class UserEntityDetailsService implements UserDetailsService {
         }
     }
 
+    @Transactional
+    public UserEntity loginLocalUser(String email, String password) {
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new BadCredentialsException("Invalid password");
+        }
+
+
+
+        return user;
+    }
 
 }

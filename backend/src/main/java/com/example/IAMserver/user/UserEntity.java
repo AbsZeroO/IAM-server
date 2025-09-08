@@ -3,8 +3,6 @@ package com.example.IAMserver.user;
 import com.example.IAMserver.authorities.RoleEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -124,6 +122,12 @@ public class UserEntity implements UserDetails {
     )
     @Singular
     private Set<RoleEntity> roles;
+
+    /**
+     * Optimistic lock version field.
+     */
+    @Version
+    private Integer version;
 
     /**
      * Collects permissions from roles and maps them to Spring Security authorities.

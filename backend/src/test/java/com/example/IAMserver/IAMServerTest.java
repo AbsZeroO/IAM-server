@@ -1,8 +1,9 @@
 package com.example.IAMserver;
 
 import com.example.IAMserver.dto.UserRegistrationRequest;
+import com.example.IAMserver.user.UserEntity;
 import com.example.IAMserver.user.UserEntityDetailsService;
-import lombok.RequiredArgsConstructor;
+import com.example.IAMserver.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,9 @@ class IAMServerTest {
     @Autowired
     private UserEntityDetailsService userEntityDetailsService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Test
     void contextLoads() {
     }
@@ -29,7 +33,7 @@ class IAMServerTest {
         for (int i = 0; i < threads; i++) {
             executor.submit(() -> {
                 try {
-                    userEntityDetailsService.registerUser(new UserRegistrationRequest("abc@example.com", "password", "abc"));
+                    userEntityDetailsService.registerLocalUser(new UserRegistrationRequest("abc@example.com", "password", "abc"));
                 } catch (Exception e) {
                     System.out.println(Thread.currentThread().getName() + " -> " + e.getClass().getSimpleName());
                 }
@@ -39,6 +43,11 @@ class IAMServerTest {
         executor.shutdown();
         executor.awaitTermination(5, TimeUnit.SECONDS);
 
+
+        UserEntity user = userRepository.findByEmail("abc@example.com").orElse(null);
+
+        userRepository.delete(user);
+        userRepository.delete(user);
 
     }
 
