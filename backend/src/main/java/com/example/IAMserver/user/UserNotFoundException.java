@@ -3,11 +3,11 @@ package com.example.IAMserver.user;
 import com.example.IAMserver.exception.ApiException;
 import com.example.IAMserver.exception.ErrorCode;
 
-public class UserAlreadyExistsException extends ApiException {
+public class UserNotFoundException extends ApiException {
 
-    private final ErrorCode errorCode = ErrorCode.USER_ALREADY_EXISTS;
+    private final ErrorCode errorCode = ErrorCode.USER_NOT_FOUND;
 
-    public UserAlreadyExistsException(String message) {
+    public UserNotFoundException(String message) {
         super(message);
     }
 
@@ -20,4 +20,5 @@ public class UserAlreadyExistsException extends ApiException {
     public org.springframework.http.HttpStatus getHttpStatus() {
         return errorCode.getStatus();
     }
+
 }
