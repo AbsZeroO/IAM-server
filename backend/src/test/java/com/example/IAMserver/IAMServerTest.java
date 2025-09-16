@@ -1,6 +1,6 @@
 package com.example.IAMserver;
 
-import com.example.IAMserver.dto.UserRegistrationRequest;
+import com.example.IAMserver.auth.dto.UserRegistrationRequest;
 import com.example.IAMserver.user.UserEntity;
 import com.example.IAMserver.user.UserEntityDetailsService;
 import com.example.IAMserver.user.UserRepository;

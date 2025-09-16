@@ -1,6 +1,6 @@
-package com.example.IAMserver.authorities.repository;
+package com.example.IAMserver.authoritie.repository;
 
-import com.example.IAMserver.authorities.PermissionEntity;
+import com.example.IAMserver.authoritie.PermissionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

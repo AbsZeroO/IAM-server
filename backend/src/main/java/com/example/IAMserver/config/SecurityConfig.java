@@ -18,12 +18,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
-                .formLogin(form -> form
-                        .usernameParameter("email")
-                        .passwordParameter("password")
-                        .permitAll()
-                )
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
                 .logout(LogoutConfigurer::permitAll);
 
         return http.build();

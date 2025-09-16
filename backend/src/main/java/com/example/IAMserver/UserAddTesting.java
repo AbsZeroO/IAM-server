@@ -1,9 +1,9 @@
 package com.example.IAMserver;
 
-import com.example.IAMserver.authorities.PermissionEntity;
-import com.example.IAMserver.authorities.RoleEntity;
-import com.example.IAMserver.authorities.repository.PermissionRepository;
-import com.example.IAMserver.authorities.repository.RoleRepository;
+import com.example.IAMserver.authoritie.PermissionEntity;
+import com.example.IAMserver.authoritie.RoleEntity;
+import com.example.IAMserver.authoritie.repository.PermissionRepository;
+import com.example.IAMserver.authoritie.repository.RoleRepository;
 import com.example.IAMserver.user.OutsideAuthProvider;
 import com.example.IAMserver.user.UserEntity;
 import com.example.IAMserver.user.UserRepository;

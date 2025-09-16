@@ -1,13 +1,10 @@
 package com.example.IAMserver.user;
 
-import com.example.IAMserver.authorities.RoleService;
-import com.example.IAMserver.dto.UserRegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +16,6 @@ import java.util.UUID;
 public class UserEntityDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final RoleService roleService;
 
     /**
      * Locates the user based on the username. In the actual implementation, the search
@@ -42,28 +37,6 @@ public class UserEntityDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
 
-    @Transactional
-    public void registerLocalUser(UserRegistrationRequest userRegistrationRequest) throws UserAlreadyExistsException {
-        try {
-            userRepository.save(
-                    UserEntity.builder()
-                            .email(userRegistrationRequest.email())
-                            .password(passwordEncoder.encode(userRegistrationRequest.password()))
-                            .username(userRegistrationRequest.username())
-                            .role(roleService.getDefaultRole())
-                            .outsideAuthProvider(OutsideAuthProvider.LOCAL)
-                            .build()
-            );
-        } catch (DataIntegrityViolationException e) {
-            log.warn("Attempt to register user with existing email '{}' or username '{}'",
-                    userRegistrationRequest.email(), userRegistrationRequest.username(), e);
-
-            throw new UserAlreadyExistsException(
-                    String.format("User with email '%s' or username '%s' already exists",
-                            userRegistrationRequest.email(), userRegistrationRequest.username())
-            );
-        }
-    }
 
     @Transactional
     public void deleteUserById(UUID id) {
@@ -80,20 +53,6 @@ public class UserEntityDetailsService implements UserDetailsService {
             log.error("Failed to delete user with id '{}'", id, e);
             throw e;
         }
-    }
-
-    @Transactional
-    public UserEntity loginLocalUser(String email, String password) {
-        UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new BadCredentialsException("Invalid password");
-        }
-
-
-
-        return user;
     }
 
 }

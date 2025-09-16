@@ -1,4 +1,4 @@
-package com.example.IAMserver.authorities;
+package com.example.IAMserver.authoritie;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

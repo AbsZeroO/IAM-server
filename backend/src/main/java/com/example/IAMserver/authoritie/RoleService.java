@@ -1,6 +1,6 @@
-package com.example.IAMserver.authorities;
+package com.example.IAMserver.authoritie;
 
-import com.example.IAMserver.authorities.repository.RoleRepository;
+import com.example.IAMserver.authoritie.repository.RoleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

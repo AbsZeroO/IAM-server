@@ -1,27 +1,40 @@
 package com.example.IAMserver.auth;
 
-import com.example.IAMserver.dto.UserRegistrationRequest;
-import com.example.IAMserver.user.UserEntityDetailsService;
+import com.example.IAMserver.auth.dto.UserLoginRequest;
+import com.example.IAMserver.auth.dto.UserRegistrationRequest;
+import com.nimbusds.jose.JOSEException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserEntityDetailsService userEntityDetailsService;
+    private final AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest) {
 
-        userEntityDetailsService.registerLocalUser(userRegistrationRequest);
+        authService.registerLocalUser(userRegistrationRequest);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserLoginRequest userLoginRequest) throws JOSEException {
+
+        log.error("EEERRRRROOOOORRRR");
+        String token = authService.loginLocalUser(userLoginRequest);
+
+        return ResponseEntity.ok(token);
+
     }
 
 }
