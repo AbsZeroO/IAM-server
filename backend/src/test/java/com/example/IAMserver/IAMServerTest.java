@@ -1,5 +1,6 @@
 package com.example.IAMserver;
 
+import com.example.IAMserver.auth.AuthService;
 import com.example.IAMserver.auth.dto.UserRegistrationRequest;
 import com.example.IAMserver.user.UserEntity;
 import com.example.IAMserver.user.UserEntityDetailsService;
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 class IAMServerTest {
 
     @Autowired
-    private UserEntityDetailsService userEntityDetailsService;
+    private AuthService authService;
 
     @Autowired
     private UserRepository userRepository;
@@ -33,7 +34,7 @@ class IAMServerTest {
         for (int i = 0; i < threads; i++) {
             executor.submit(() -> {
                 try {
-                    userEntityDetailsService.registerLocalUser(new UserRegistrationRequest("abc@example.com", "password", "abc"));
+                    authService.registerLocalUser(new UserRegistrationRequest("abc@example.com", "password", "abc"));
                 } catch (Exception e) {
                     System.out.println(Thread.currentThread().getName() + " -> " + e.getClass().getSimpleName());
                 }

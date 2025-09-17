@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
@@ -202,4 +203,23 @@ public class UserEntity implements UserDetails {
         return enabled;
     }
 
+    @Override
+    public String toString() {
+        return "UserEntity{" + "timestamp=" + LocalDateTime.now() +
+                ", id=" + id +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", oauthId='" + oauthId + '\'' +
+                ", outsideAuthProvider=" + outsideAuthProvider +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", enabled=" + enabled +
+                ", accountNonExpired=" + accountNonExpired +
+                ", accountNonLocked=" + accountNonLocked +
+                ", credentialsNonExpired=" + credentialsNonExpired +
+                ", roles=" + roles +
+                ", version=" + version +
+                '}';
+    }
 }
