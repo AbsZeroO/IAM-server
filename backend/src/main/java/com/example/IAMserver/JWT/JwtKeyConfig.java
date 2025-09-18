@@ -1,4 +1,4 @@
-package com.example.IAMserver.config;
+package com.example.IAMserver.JWT;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

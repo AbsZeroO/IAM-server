@@ -1,4 +1,4 @@
-package com.example.IAMserver.utilJWT;
+package com.example.IAMserver.JWT;
 
 import com.example.IAMserver.user.UserEntity;
 import com.nimbusds.jose.JOSEException;
@@ -20,13 +20,9 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class JWTService {
+public class JWTGenerateService {
 
-    @Value("${security.jwt.private-key}")
-    private RSAPrivateKey privateKey;
-
-    @Value("${security.jwt.public-key}")
-    private RSAPublicKey publicKey;
+    private final RSAPrivateKey privateKey;
 
     @Value("${app.jwt.expiration}")
     private int expiration;
@@ -48,7 +44,7 @@ public class JWTService {
 
         SignedJWT signedJWT = new SignedJWT(
                 new JWSHeader.Builder(JWSAlgorithm.RS256)
-                        .keyID("rsa-kid-1")
+                        .keyID("rsa-kid-1") // TODO Change it to rotating keys
                         .build(),
                 jwtClaimsSet
         );

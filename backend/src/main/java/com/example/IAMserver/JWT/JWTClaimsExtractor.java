@@ -1,4 +1,4 @@
-package com.example.IAMserver.utilJWT;
+package com.example.IAMserver.JWT;
 
 import com.nimbusds.jose.JOSEException;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ public class JWTClaimsExtractor {
 
     private final JWTParserService parserService;
 
-    public String getUserId(String token) throws JOSEException, ParseException, ParseException, JOSEException {
+    public String getUserId(String token) throws ParseException, JOSEException {
         return parserService.parseToken(token).getSubject();
     }
 

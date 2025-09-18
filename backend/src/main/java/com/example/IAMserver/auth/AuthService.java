@@ -4,7 +4,7 @@ import com.example.IAMserver.auth.dto.UserLoginRequest;
 import com.example.IAMserver.authoritie.RoleService;
 import com.example.IAMserver.auth.dto.UserRegistrationRequest;
 import com.example.IAMserver.user.*;
-import com.example.IAMserver.utilJWT.JWTService;
+import com.example.IAMserver.JWT.JWTGenerateService;
 import com.nimbusds.jose.JOSEException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
-    private final JWTService jwtService;
+    private final JWTGenerateService jwtService;
 
     @Transactional
     public void registerLocalUser(UserRegistrationRequest request) throws UserAlreadyExistsException {

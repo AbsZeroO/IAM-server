@@ -1,4 +1,4 @@
-package com.example.IAMserver.utilJWT;
+package com.example.IAMserver.JWT;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSVerifier;
