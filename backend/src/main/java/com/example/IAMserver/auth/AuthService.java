@@ -1,5 +1,6 @@
 package com.example.IAMserver.auth;
 
+import com.example.IAMserver.auth.dto.LoginResponse;
 import com.example.IAMserver.auth.dto.UserLoginRequest;
 import com.example.IAMserver.authoritie.RoleService;
 import com.example.IAMserver.auth.dto.UserRegistrationRequest;
@@ -68,13 +69,13 @@ public class AuthService {
     }
 
     @Transactional(readOnly = true)
-    public String loginLocalUser(UserLoginRequest userLoginRequest) throws JOSEException {
+    public LoginResponse loginLocalUser(UserLoginRequest userLoginRequest) throws JOSEException {
         log.info("Login attempt for email='{}'", userLoginRequest.email());
 
         UserEntity user = userRepository.findByEmail(userLoginRequest.email())
                 .orElseThrow(() -> {
-                    log.warn("Login failed: no user found with email='{}'", userLoginRequest.email());
-                    return new UserNotFoundException("User not found with email: " + userLoginRequest.email());
+                    log.warn("Login failed for email='{}': invalid credentials", userLoginRequest.email());
+                    return new BadCredentialsException("Invalid email or password");
                 });
 
         if (!passwordEncoder.matches(userLoginRequest.password(), user.getPassword())) {
@@ -85,6 +86,6 @@ public class AuthService {
         String token = jwtService.generateToken(user);
         log.info("Login successful for email='{}'. Token generated.", userLoginRequest.email());
 
-        return token;
+        return new LoginResponse(token);
     }
 }

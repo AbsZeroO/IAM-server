@@ -1,5 +1,6 @@
 package com.example.IAMserver.auth;
 
+import com.example.IAMserver.auth.dto.LoginResponse;
 import com.example.IAMserver.auth.dto.UserLoginRequest;
 import com.example.IAMserver.auth.dto.UserRegistrationRequest;
 import com.nimbusds.jose.JOSEException;
@@ -26,9 +27,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginRequest userLoginRequest) throws JOSEException {
+    public ResponseEntity<LoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) throws JOSEException {
 
-        String token = authService.loginLocalUser(userLoginRequest);
+        LoginResponse token = authService.loginLocalUser(userLoginRequest);
 
         return ResponseEntity.ok(token);
 
